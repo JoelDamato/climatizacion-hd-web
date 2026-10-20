@@ -1,0 +1,75 @@
+{
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/:p(contacto|mensaje-enviado)",
+      "destination": "/#presupuesto",
+      "permanent": true
+    },
+    {
+      "source": "/servicios",
+      "destination": "/#sistemas",
+      "permanent": true
+    },
+    {
+      "source": "/nosotros",
+      "destination": "/nosotros/",
+      "permanent": true
+    },
+    {
+      "source": "/:p(trabajos|trabajos-portfolio|listado-de-portfolio|portfolio)",
+      "destination": "/#obras",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio/:slug*",
+      "destination": "/#barrios",
+      "permanent": true
+    },
+    {
+      "source": "/:p(productos|cart|checkout)",
+      "destination": "/#productos",
+      "permanent": true
+    },
+    {
+      "source": "/productos/:slug*",
+      "destination": "/#productos",
+      "permanent": true
+    },
+    {
+      "source": "/:p(footer-wooden-cottages|sitemap_index.xml|page-sitemap.xml|product-sitemap.xml|portfolio-sitemap.xml)",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/img/:f*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/:f(estilo.css|app.js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/:f(llms.txt|llms-full.txt|robots.txt)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    }
+  ],
+  "trailingSlash": false
+}
