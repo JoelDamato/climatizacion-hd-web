@@ -375,21 +375,6 @@ p{margin:0}
 }
 @media (max-width:520px){.top-cta{gap:6px}.top-cta .btn-primary{padding:9px 12px}}
 
-/* Zonas donde trabajamos */
-.zonas{margin-top:56px;border-top:1px solid rgba(255,255,255,.1);padding-top:36px}
-.zonas h3{font-size:clamp(20px,2.2vw,24px)}
-.zonas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:22px}
-.zona-col h4{font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
-.zona-col p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:10px}
-.zona-col p b{display:block;color:rgba(255,255,255,.88);font-weight:500}
-.zona-col span{transition:color .3s,opacity .3s}
-.zona-col span+span::before{content:", ";color:rgba(255,255,255,.55)}
-.zona-col span.hot{color:var(--green);font-weight:500}
-.zona-col span.dim{opacity:.35}
-.zona-col.dim{opacity:.35}
-@media (max-width:1000px){.zonas-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:520px){.zonas-grid{grid-template-columns:1fr;gap:18px}}
-
 /* Marcas: distribuidores oficiales también como logo */
 .marcas li.of{color:var(--blue)}
 
@@ -415,3 +400,6 @@ p{margin:0}
 /* Plano: número y separación de cada circuito */
 .circ-bg{fill:rgba(7,19,39,.85)}
 .circ-tx{fill:#fff;font:600 8.5px 'Kanit',sans-serif}
+
+/* Nube: al buscar o filtrar, las coincidencias suben al principio y se ven */
+.nube.filtra{align-content:flex-start;mask-image:linear-gradient(#000 70%,transparent);-webkit-mask-image:linear-gradient(#000 70%,transparent)}

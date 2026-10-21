@@ -193,14 +193,12 @@ $$('button', sisTabs).forEach(b => b.addEventListener('click', () => {
 /* ---------- Barrios (la lista está en el HTML; acá el buscador y los filtros) ---------- */
 const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
 const nube = $('#nube'), res = $('#barrioRes'), input = $('#barrioInput'), zt = $('#zonaTabs');
-const chips = [...$$('span', nube), ...$$('#zonas span')];
-const zCols = $$('.zona-col');
+const chips = $$('span', nube);
 const zBtns = $$('button', zt);
 zBtns.forEach(b => b.addEventListener('click', () => {
   const z = b.dataset.z;
-  zBtns.forEach(x => x.classList.toggle('on', x === b)); input.value = ''; res.replaceChildren();
-  chips.forEach(c => { c.classList.remove('hot'); c.classList.toggle('dim', z !== 'Todas' && c.dataset.z !== z); if (z !== 'Todas' && c.dataset.z === z && nube.contains(c)) c.classList.add('hot'); });
-  zCols.forEach(k => { k.classList.toggle('dim', z !== 'Todas' && k.dataset.z !== z); k.querySelectorAll('span').forEach(c => c.classList.remove('dim')); });
+  zBtns.forEach(x => x.classList.toggle('on', x === b)); input.value = ''; res.replaceChildren(); nube.classList.toggle('filtra', z !== 'Todas');
+  chips.forEach(c => { c.classList.remove('hot'); c.classList.toggle('dim', z !== 'Todas' && c.dataset.z !== z); if (z !== 'Todas' && c.dataset.z === z) c.classList.add('hot'); c.style.order = c.classList.contains('hot') ? -1 : ''; });
 }));
 function resCard(ok, text, msg) {
   const card = document.createElement('div'); card.className = 'res-card' + (ok ? '' : ' no');
@@ -215,10 +213,10 @@ function resCard(ok, text, msg) {
 function search() {
   const q = norm(input.value);
   zBtns.forEach((x, i) => x.classList.toggle('on', i === 0));
-  zCols.forEach(k => k.classList.remove('dim'));
-  if (q.length < 3) { res.replaceChildren(); chips.forEach(c => c.classList.remove('hot', 'dim')); return; }
+  nube.classList.toggle('filtra', q.length >= 3);
+  if (q.length < 3) { res.replaceChildren(); chips.forEach(c => { c.classList.remove('hot', 'dim'); c.style.order = ''; }); return; }
   const hits = chips.filter(c => c.dataset.n.includes(q));
-  chips.forEach(c => { const h = hits.includes(c); c.classList.toggle('hot', h); c.classList.toggle('dim', !h); });
+  chips.forEach(c => { const h = hits.includes(c); c.classList.toggle('hot', h); c.classList.toggle('dim', !h); c.style.order = h ? -1 : ''; });
   if (hits.length) {
     const name = hits[0].textContent, more = hits.length > 1 ? ` y ${hits.length - 1} más` : '';
     resCard(true, { name, more }, `Hola, tengo una obra en ${name} y quiero cotizar la climatización.`);
@@ -229,7 +227,7 @@ function search() {
 input.addEventListener('input', search);
 if (!RM) setInterval(() => {
   if (input.value || !zBtns[0].classList.contains('on')) return;
-  const nc = $$('span', nube), c = nc[Math.floor(Math.random() * nc.length)];
+  const c = chips[Math.floor(Math.random() * chips.length)];
   c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');
 }, 650);
 
