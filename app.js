@@ -25,6 +25,12 @@ function onScroll() {
 }
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+/* Menú desplegable en celular */
+const burger = $('#burger');
+const setMenu = open => { top.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); burger.setAttribute('aria-label', open ? 'Cerrar el menú' : 'Abrir el menú'); };
+burger.addEventListener('click', () => setMenu(!top.classList.contains('open')));
+$$('#topNav a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
 /* ---------- Plano interactivo ---------- */
 const sys = $('#sysLayer'), heat = $('#heatLayer'), tags = $('#tags');
 const tempVal = $('#tempVal'), tempLbl = $('#tempLbl'), tempBox = $('.plano-temp'), foot = $('#planoFoot');
@@ -35,15 +41,23 @@ const ROOMS = {
 const COLECTOR = [196, 146];
 const FOOT = {
   piso: 'Cada circuito sale de un balance térmico hecho sobre tu plano: separación de la serpentina, potencia de la caldera y ubicación de los colectores.',
-  rad: 'Un radiador bajo cada ventana, dimensionado según el ambiente, con termostato para manejar la caldera desde el celular.',
+  rad: 'Cada ambiente con sus radiadores según balance térmico y diseño.',
   aire: 'Dejamos la pre-instalación hecha durante la obra: cañerías, desagües y ubicación de unidades interiores y exteriores.'
 };
 let tempTimer, cycleTimer, userPicked = false, current = 'piso';
 
-function serpentine([x0, y0, x1, y1], s = 9) {
-  let d = `M${x0} ${y0}`, y = y0, dir = 1;
-  while (y <= y1) { d += ` H${dir > 0 ? x1 : x0}`; if (y + s <= y1) d += ` V${y + s}`; y += s; dir *= -1; }
-  return d;
+// Espiral doble (ida y vuelta) como en el plano de HD: entra por el borde, gira hasta el centro y sale entre medio.
+function spiralPts([l, t, r, b], d) {
+  const p = [[l, t]];
+  while (r - l > d && b - t > d) {
+    p.push([r, t], [r, b], [l, b], [l, t + d]);
+    t += d; l += d; r -= d; b -= d;
+  }
+  return p;
+}
+function spiral([x0, y0, x1, y1], g) {
+  const a = spiralPts([x0, y0, x1, y1], g * 2), b = spiralPts([x0 + g, y0 + g, x1 - g, y1 - g], g * 2).reverse();
+  return 'M' + a.concat(b).map(q => q.join(' ')).join(' L');
 }
 function animateTemp(from, to, ms, color, label) {
   clearInterval(tempTimer);
@@ -80,21 +94,27 @@ function glow(cx, cy, rx, ry, fill, delay) {
 }
 function clearPlano() { sys.replaceChildren(); heat.replaceChildren(); tags.replaceChildren(); }
 
+const CIRC = { dorm1: ['#ff6b6b', 20], cocina: ['#6b8cff', 15], living: ['#7ee081', 15], dorm2: ['#e06bdc', 20], dorm2b: ['#5fd6e6', 20], bano: ['#f5c542', 10] };
 function renderPiso() {
   const order = ['dorm1', 'cocina', 'living', 'dorm2', 'dorm2b', 'bano'];
   el('rect', { x: COLECTOR[0] - 8, y: COLECTOR[1] - 6, width: 16, height: 12, rx: 2, fill: '#89bc6f' }, sys);
   el('rect', { x: 36, y: 248, width: 18, height: 22, rx: 3, fill: '#e8eef8' }, sys);
   order.forEach((k, i) => {
     const r = ROOMS[k], delay = 250 + i * 380;
-    const start = `M${COLECTOR[0]} ${COLECTOR[1]} L${r[0]} ${r[1]}`;
-    drawPath(start, 'rgba(255,170,90,.55)', 1.4, delay, 500);
-    const p = drawPath(serpentine(r), 'url(#gHeat)', 2.1, delay + 300, 1500);
+    const [col, sep] = CIRC[k];
+    const start = k === 'bano' ? `M${COLECTOR[0]} ${COLECTOR[1]} H300 V${r[1]} H${r[0]}` : `M${COLECTOR[0]} ${COLECTOR[1]} H${r[0]} V${r[1]}`;
+    drawPath(start, col, 1.2, delay, 500);
+    const p = drawPath(spiral(r, sep / 3.4), col, 1.3, delay + 300, 1800);
+    const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2, lb = `${i + 1} · c/${sep}`, w = lb.length * 4.9 + 10;
+    const g = el('g', { opacity: RM ? 1 : 0, style: `transition:opacity .5s ${delay + 1500}ms` }, tags);
+    el('rect', { x: cx - w / 2, y: cy - 7, width: w, height: 13, rx: 3, class: 'circ-bg', stroke: col, 'stroke-width': 1 }, g);
+    el('text', { x: cx, y: cy + 2.5, 'text-anchor': 'middle', class: 'circ-tx' }, g).textContent = lb;
+    requestAnimationFrame(() => requestAnimationFrame(() => g.setAttribute('opacity', 1)));
     if (!RM) setTimeout(() => { const f = p.cloneNode(); f.removeAttribute('style'); f.setAttribute('stroke', 'rgba(255,255,255,.55)'); f.setAttribute('stroke-width', 1.2); f.classList.add('flow'); sys.appendChild(f); }, delay + 1900);
     glow((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, (r[2] - r[0]) / 1.6, (r[3] - r[1]) / 1.4, 'url(#gWarm)', delay + 900);
   });
   tag(150, 128, 'Colector', 300);
   tag(58, 262, 'Caldera bajo consumo', 900);
-  tag(240, 108, 'Balance térmico por ambiente', 2200);
   animateTemp(12, 22, 3600, '#ffb27a', 'piso radiante');
 }
 function renderRad() {
@@ -173,12 +193,14 @@ $$('button', sisTabs).forEach(b => b.addEventListener('click', () => {
 /* ---------- Barrios (la lista está en el HTML; acá el buscador y los filtros) ---------- */
 const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
 const nube = $('#nube'), res = $('#barrioRes'), input = $('#barrioInput'), zt = $('#zonaTabs');
-const chips = $$('span', nube);
+const chips = [...$$('span', nube), ...$$('#zonas span')];
+const zCols = $$('.zona-col');
 const zBtns = $$('button', zt);
 zBtns.forEach(b => b.addEventListener('click', () => {
   const z = b.dataset.z;
   zBtns.forEach(x => x.classList.toggle('on', x === b)); input.value = ''; res.replaceChildren();
-  chips.forEach(c => { c.classList.remove('hot'); c.classList.toggle('dim', z !== 'Todas' && c.dataset.z !== z); if (z !== 'Todas' && c.dataset.z === z) c.classList.add('hot'); });
+  chips.forEach(c => { c.classList.remove('hot'); c.classList.toggle('dim', z !== 'Todas' && c.dataset.z !== z); if (z !== 'Todas' && c.dataset.z === z && nube.contains(c)) c.classList.add('hot'); });
+  zCols.forEach(k => { k.classList.toggle('dim', z !== 'Todas' && k.dataset.z !== z); k.querySelectorAll('span').forEach(c => c.classList.remove('dim')); });
 }));
 function resCard(ok, text, msg) {
   const card = document.createElement('div'); card.className = 'res-card' + (ok ? '' : ' no');
@@ -193,6 +215,7 @@ function resCard(ok, text, msg) {
 function search() {
   const q = norm(input.value);
   zBtns.forEach((x, i) => x.classList.toggle('on', i === 0));
+  zCols.forEach(k => k.classList.remove('dim'));
   if (q.length < 3) { res.replaceChildren(); chips.forEach(c => c.classList.remove('hot', 'dim')); return; }
   const hits = chips.filter(c => c.dataset.n.includes(q));
   chips.forEach(c => { const h = hits.includes(c); c.classList.toggle('hot', h); c.classList.toggle('dim', !h); });
@@ -206,11 +229,32 @@ function search() {
 input.addEventListener('input', search);
 if (!RM) setInterval(() => {
   if (input.value || !zBtns[0].classList.contains('on')) return;
-  const c = chips[Math.floor(Math.random() * chips.length)];
+  const nc = $$('span', nube), c = nc[Math.floor(Math.random() * nc.length)];
   c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');
 }, 650);
 
 /* Obras y productos: ahora están en el HTML (SEO, 20-10). */
+
+/* ---------- Galería: al tocar una foto se ve en grande ---------- */
+const visor = $('#visor'), vImg = $('img', visor), vCap = $('figcaption', visor), obras = $$('#obrasGrid .obra');
+let vi = 0, lastFocus;
+function verFoto(i) {
+  vi = (i + obras.length) % obras.length;
+  const img = $('img', obras[vi]), cap = $('figcaption', obras[vi]);
+  vImg.src = img.currentSrc || img.src; vImg.alt = img.alt;
+  vCap.textContent = cap ? [...cap.childNodes].map(n => n.textContent.trim()).filter(Boolean).join(' · ') : img.alt;
+}
+function abrirVisor(i) { lastFocus = document.activeElement; verFoto(i); visor.hidden = false; document.body.style.overflow = 'hidden'; $('.visor-x', visor).focus(); }
+function cerrarVisor() { visor.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+obras.forEach((o, i) => { o.tabIndex = 0; o.setAttribute('role', 'button'); o.addEventListener('click', () => abrirVisor(i)); o.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirVisor(i); } }); });
+$('.visor-x', visor).addEventListener('click', cerrarVisor);
+$('.visor-prev', visor).addEventListener('click', () => verFoto(vi - 1));
+$('.visor-next', visor).addEventListener('click', () => verFoto(vi + 1));
+visor.addEventListener('click', e => { if (e.target === visor) cerrarVisor(); });
+addEventListener('keydown', e => { if (visor.hidden) return; if (e.key === 'Escape') cerrarVisor(); if (e.key === 'ArrowLeft') verFoto(vi - 1); if (e.key === 'ArrowRight') verFoto(vi + 1); });
+let tx = null;
+visor.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+visor.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) verFoto(vi + (dx < 0 ? 1 : -1)); tx = null; });
 
 /* ---------- Formulario de GHL: se carga cuando el usuario se acerca (pesa ~3,5 MB) ---------- */
 const ghl = $('iframe[data-src]');

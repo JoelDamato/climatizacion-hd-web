@@ -358,3 +358,60 @@ p{margin:0}
 .pagina-nos{padding-top:72px}
 .nos-h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:.3em 0 .6em}
 .sub .top{background:#071327}
+
+/* ===== Cambios 21-10 (textos y modificaciones de HD) ===== */
+/* Menú desplegable en celular */
+.top-burger{display:none;width:40px;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;padding:0;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.top-burger span{display:block;width:16px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .2s}
+.top.open .top-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.top.open .top-burger span:nth-child(2){opacity:0}
+.top.open .top-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media (max-width:900px){
+  .top-burger{display:inline-flex}
+  .top.open{background:rgba(7,19,39,.97)}
+  .top.open .top-nav{display:flex;flex-direction:column;gap:0;position:absolute;left:0;right:0;top:100%;background:rgba(7,19,39,.97);padding:6px 20px 18px;border-top:1px solid rgba(255,255,255,.08);box-shadow:0 18px 30px rgba(0,0,0,.3)}
+  .top.open .top-nav a{padding:13px 0;font-size:17px;border-bottom:1px solid rgba(255,255,255,.07)}
+  .top.open .top-nav a:last-child{border-bottom:0}
+}
+@media (max-width:520px){.top-cta{gap:6px}.top-cta .btn-primary{padding:9px 12px}}
+
+/* Zonas donde trabajamos */
+.zonas{margin-top:56px;border-top:1px solid rgba(255,255,255,.1);padding-top:36px}
+.zonas h3{font-size:clamp(20px,2.2vw,24px)}
+.zonas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:22px}
+.zona-col h4{font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.zona-col p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:10px}
+.zona-col p b{display:block;color:rgba(255,255,255,.88);font-weight:500}
+.zona-col span{transition:color .3s,opacity .3s}
+.zona-col span+span::before{content:", ";color:rgba(255,255,255,.55)}
+.zona-col span.hot{color:var(--green);font-weight:500}
+.zona-col span.dim{opacity:.35}
+.zona-col.dim{opacity:.35}
+@media (max-width:1000px){.zonas-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.zonas-grid{grid-template-columns:1fr;gap:18px}}
+
+/* Marcas: distribuidores oficiales también como logo */
+.marcas li.of{color:var(--blue)}
+
+/* Galería: fotos que se agrandan */
+.obra{cursor:zoom-in}
+.visor{position:fixed;inset:0;z-index:100;background:rgba(7,19,39,.94);display:flex;align-items:center;justify-content:center;padding:56px 16px}
+.visor[hidden]{display:none}
+.visor figure{margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;align-items:center;gap:12px}
+.visor img{max-width:100%;max-height:calc(100vh - 150px);object-fit:contain;border-radius:10px}
+.visor figcaption{color:#fff;font-size:15px;text-align:center}
+.visor-x,.visor-nav{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:999px;cursor:pointer;font:300 28px/1 'Kanit',sans-serif;width:46px;height:46px;display:flex;align-items:center;justify-content:center}
+.visor-x{top:14px;right:14px}
+.visor-prev{left:14px;top:50%;transform:translateY(-50%)}
+.visor-next{right:14px;top:50%;transform:translateY(-50%)}
+@media (max-width:760px){.visor-nav{top:auto;bottom:14px;transform:none}}
+
+/* HD Home (en construcción) */
+.hdhome{padding:var(--pad) 0;background:linear-gradient(180deg,var(--navy-2),var(--navy));color:#fff}
+.hdhome-in{display:flex;flex-direction:column;align-items:flex-start}
+.hdhome .lead-s{color:rgba(255,255,255,.65);margin-bottom:24px}
+.hdhome-tag{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);background:var(--green);padding:6px 12px;border-radius:999px}
+
+/* Plano: número y separación de cada circuito */
+.circ-bg{fill:rgba(7,19,39,.85)}
+.circ-tx{fill:#fff;font:600 8.5px 'Kanit',sans-serif}

@@ -14,7 +14,7 @@
 
 ## Qué hace
 
-- [Piso radiante](https://climatizacionhd.com/#sistemas): por agua (serpentinas de PEX con caldera, agua a 40-60 °C) y eléctrico. Con caldera de bajo consumo ahorra alrededor de 35% de energía; una sonda externa suma otro 5%.
+- [Piso radiante](https://climatizacionhd.com/#sistemas): por agua (serpentinas de PEX con caldera, agua a 40-60 °C). Con caldera de bajo consumo ahorra alrededor de 35% de energía; una sonda externa suma otro 5%.
 - [Calefacción por radiadores](https://climatizacionhd.com/#sistemas): radiadores y toalleros con caldera, para refacciones, casas habitadas y edificios. Con caldera de bajo consumo, cerca de 15% menos consumo.
 - [Aire acondicionado y pre-instalación](https://climatizacionhd.com/#sistemas): split, multi split, piso techo, cassette y baja silueta, frío/calor e inverter. Deja la pre-instalación hecha durante la obra.
 - [VRV / VRF](https://climatizacionhd.com/#sistemas): proyecto, provisión, instalación y puesta en marcha para edificios, obras comerciales, geriátricos, clínicas y casas grandes, con especialista dedicado.
@@ -37,14 +37,14 @@ Zona Norte, Zona Oeste y Zona Sur del Gran Buenos Aires, Ciudad Autónoma de Bue
 
 1. Mandar el plano de la obra en PDF o CAD (formulario de la web, WhatsApp o mail). Si no hay plano cerrado, se coordina una reunión por Zoom o presencial.
 2. HD hace el balance térmico (localidad, orientación, tipo de vidrio, construcción tradicional o steel frame, altura).
-3. En 48 horas entrega el presupuesto con el proyecto: ubicación de caldera, colectores y termostatos, y ayudas de gremio para electricista, sanitarista, gasista y albañil.
-4. Se aprueba el proyecto antes de arrancar y la obra la ejecuta equipo propio. Al final se entrega un pendrive con proyecto, fotos y manuales.
+3. En 48 horas entrega el presupuesto con anteproyecto; aprobado, el proyecto final define ubicación de caldera, colectores y termostatos, y ayudas de gremio para electricista, sanitarista, gasista y albañil.
+4. Se aprueba el proyecto antes de arrancar y la obra la ejecuta equipo propio. Al final se entrega un pendrive con fotos de la obra, folletos y manuales, y se explica el funcionamiento del sistema.
 
 ## Datos clave
 
 - En obra desde 2006 (20 años).
 - Distribuidor oficial de BAXI · Triangular y de bombas ROWA. Trabaja también con Surrey, BGH, Midea, LG, Samsung, CoolTime, Rheem, Elbi, Tromen y Caldaia.
-- 4,8 de 5 con 104 opiniones en Google.
+- 4,9 de 5 con más de 100 opiniones en Google.
 
 ## Preguntas frecuentes
 
@@ -54,7 +54,7 @@ Climatización HD (HD Climatización SRL) es una empresa de Béccar, San Isidro,
 
 ### ¿Cuánto tarda el presupuesto?
 
-El presupuesto sale en 48 horas desde que recibimos el plano de la obra en PDF o CAD. Incluye el proyecto: balance térmico, ubicación de la caldera, colectores y termostatos, y las ayudas de gremio que necesita cada oficio.
+El presupuesto sale en 48 horas desde que recibimos el plano de la obra en PDF o AutoCAD. Se arma según balance térmico, con un anteproyecto y los opcionales de ahorro de consumo y confort.
 
 ### ¿Pueden cotizar sin plano?
 
@@ -94,7 +94,7 @@ Nos avisás y recalculamos. Un cambio de ambientes o aberturas puede modificar e
 
 ### ¿Qué pasa después de la entrega?
 
-Te dejamos un pendrive con el proyecto, fotos de la obra, folletos y manuales. El servicio técnico es nuestro y usamos cámara termográfica para diagnosticar el piso radiante sin romper.
+Te dejamos un pendrive con fotos de la obra, folletos y manuales y te explicamos el funcionamiento del sistema. El servicio técnico es nuestro y usamos cámara termográfica para diagnosticar el piso radiante sin romper.
 
 ### ¿Cómo pido presupuesto?
 
@@ -106,4 +106,4 @@ Completá el formulario de esta página o escribinos por WhatsApp al +54 9 11 35
 - Zona Oeste: Banco Provincia, Las Hojas Club de Campo, Los Pingüinos, Los Puentes, María del Buen Ayre, Prados del Oeste, San Diego, Santa Ana, Terravista.
 - Zona Sur: Country Club Cissab, El Principado, Ezeiza, Greenville, Lagos de San Eliseo, Los Troncos, Saint Thomas, Terralagos.
 - Costa e interior: Chascomús, Costa Esmeralda.
-- CABA: Barracas, Virrey del Pino.
+- CABA: Barracas.
