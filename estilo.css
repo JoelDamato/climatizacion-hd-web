@@ -168,6 +168,10 @@ p{margin:0}
 .res-card.no{border-color:rgba(255,255,255,.18)}
 .res-card p{flex:1;min-width:200px;font-size:15.5px}
 .res-card p b{color:var(--green);font-weight:600}
+.res-lotes{flex-basis:100%;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;font-size:14px;color:rgba(255,255,255,.75)}
+.res-lotes>b{display:block;color:var(--green);font-weight:600;margin-bottom:4px}
+.res-lotes ul{list-style:none;margin:0;padding:0;display:grid;gap:3px;max-height:190px;overflow:auto}
+.res-lotes li span{color:#fff;font-weight:500}
 .zona-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .zona-tabs button{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.8);font:400 14px 'Kanit',sans-serif;padding:7px 14px;border-radius:999px;cursor:pointer}
 .zona-tabs button.on{background:var(--green);border-color:var(--green);color:var(--navy);font-weight:500}

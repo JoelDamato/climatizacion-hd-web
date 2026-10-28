@@ -208,7 +208,26 @@ function resCard(ok, text, msg) {
   const a = document.createElement('a'); a.className = 'btn btn-wa btn-sm wa-link'; a.dataset.msg = msg; a.href = '#';
   const ico = document.createElementNS(NS, 'svg'); ico.setAttribute('class', 'ico'); ico.setAttribute('aria-hidden', 'true');
   el('use', { href: '#i-wa' }, ico); a.append(ico, 'Consultar');
-  card.append(p, a); res.replaceChildren(card); wireWa(res);
+  card.append(p, a);
+  if (ok && text.hits) card.append(...lotesDe(text.hits));
+  res.replaceChildren(card); wireWa(res);
+}
+/* Lotes con obra de cada barrio: data-l="Sector=1, 2|=3" (sector vacío = lotes sin sector). Nunca nombres de clientes. */
+function lotesDe(hits) {
+  const conLotes = hits.filter(c => c.dataset.l).slice(0, 3);
+  return conLotes.map(c => {
+    const box = document.createElement('div'); box.className = 'res-lotes';
+    if (hits.length > 1) { const h = document.createElement('b'); h.textContent = c.textContent; box.append(h); }
+    const ul = document.createElement('ul');
+    c.dataset.l.split('|').forEach(g => {
+      const [sec, ls] = g.split('='), li = document.createElement('li');
+      const pal = ls.includes(',') || ls.includes(' y ') ? 'Lotes ' : 'Lote ';
+      if (sec) { const s = document.createElement('span'); s.textContent = sec; li.append(s, ': ' + pal.toLowerCase() + ls); }
+      else li.textContent = pal + ls;
+      ul.append(li);
+    });
+    box.append(ul); return box;
+  });
 }
 function search() {
   const q = norm(input.value);
@@ -219,7 +238,7 @@ function search() {
   chips.forEach(c => { const h = hits.includes(c); c.classList.toggle('hot', h); c.classList.toggle('dim', !h); c.style.order = h ? -1 : ''; });
   if (hits.length) {
     const name = hits[0].textContent, more = hits.length > 1 ? ` y ${hits.length - 1} más` : '';
-    resCard(true, { name, more }, `Hola, tengo una obra en ${name} y quiero cotizar la climatización.`);
+    resCard(true, { name, more, hits }, `Hola, tengo una obra en ${name} y quiero cotizar la climatización.`);
   } else {
     resCard(false, null, `Hola, tengo una obra en ${input.value.trim()} y quiero cotizar la climatización.`);
   }
