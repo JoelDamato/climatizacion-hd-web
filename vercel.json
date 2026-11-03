@@ -32,7 +32,7 @@
       "permanent": true
     },
     {
-      "source": "/portfolio/:slug/:resto*",
+      "source": "/portfolio/:slug([^/]+)(.*)",
       "destination": "/?barrio=:slug#barrios",
       "permanent": true
     },
