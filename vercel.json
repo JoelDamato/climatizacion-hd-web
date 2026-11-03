@@ -2,6 +2,16 @@
   "cleanUrls": false,
   "redirects": [
     {
+      "source": "/barrio/:slug",
+      "destination": "/?barrio=:slug#barrios",
+      "permanent": false
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/#barrios",
+      "permanent": true
+    },
+    {
       "source": "/:p(contacto|mensaje-enviado)",
       "destination": "/#presupuesto",
       "permanent": true
@@ -22,8 +32,8 @@
       "permanent": true
     },
     {
-      "source": "/portfolio/:slug*",
-      "destination": "/#barrios",
+      "source": "/portfolio/:slug/:resto*",
+      "destination": "/?barrio=:slug#barrios",
       "permanent": true
     },
     {

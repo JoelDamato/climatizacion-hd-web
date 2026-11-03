@@ -234,7 +234,7 @@ function search() {
   zBtns.forEach((x, i) => x.classList.toggle('on', i === 0));
   nube.classList.toggle('filtra', q.length >= 3);
   if (q.length < 3) { res.replaceChildren(); chips.forEach(c => { c.classList.remove('hot', 'dim'); c.style.order = ''; }); return; }
-  const hits = chips.filter(c => c.dataset.n.includes(q));
+  const hits = chips.filter(c => c.dataset.n.includes(q)).sort((x, y) => (y.dataset.n === q) - (x.dataset.n === q));
   chips.forEach(c => { const h = hits.includes(c); c.classList.toggle('hot', h); c.classList.toggle('dim', !h); c.style.order = h ? -1 : ''; });
   if (hits.length) {
     const name = hits[0].textContent, more = hits.length > 1 ? ` y ${hits.length - 1} más` : '';
@@ -244,6 +244,16 @@ function search() {
   }
 }
 input.addEventListener('input', search);
+/* Link directo a un barrio (Vicky, 03-11): /barrio/terralagos (y los viejos /portfolio/<barrio>) llegan como
+   ?barrio=terralagos y abren la búsqueda con los lotes de ese barrio. Si el nombre no es un barrio de la lista, no hace nada. */
+(() => {
+  const q = new URLSearchParams(location.search).get('barrio');
+  if (!q) return;
+  const n = norm(q.replace(/[-_+]/g, ' ')), c = chips.find(x => x.dataset.n === n) || chips.find(x => x.dataset.n.startsWith(n));
+  if (!c) return;
+  input.value = c.textContent; search();
+  setTimeout(() => scrollTo({ top: input.getBoundingClientRect().top + scrollY - 90 }), 50);
+})();
 if (!RM) setInterval(() => {
   if (input.value || !zBtns[0].classList.contains('on')) return;
   const c = chips[Math.floor(Math.random() * chips.length)];
