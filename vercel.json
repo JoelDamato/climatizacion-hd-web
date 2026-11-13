@@ -57,12 +57,17 @@
       "permanent": true
     },
     {
-      "source": "/product-category(.*)",
+      "source": "/product-category/(.*)",
       "destination": "/#productos",
       "permanent": true
     },
     {
       "source": "/productos/(.*)",
+      "destination": "/#productos",
+      "permanent": true
+    },
+    {
+      "source": "/product-category",
       "destination": "/#productos",
       "permanent": true
     }
