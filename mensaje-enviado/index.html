@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Recibimos tu consulta | Climatización HD</title>
+ 
+  <!-- Google Analytics 4 (el mismo bloque que en el resto de las páginas) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFQTQE2KG9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SFQTQE2KG9');
+  </script>
+ 
+  <script>
+    /*
+     * 1. Conversión de formulario: BL_GA4_Form_complete (nombre exacto que usa Google Ads).
+     *    GHL redirige acá después de enviar el formulario.
+     *    Si la redirección se abre dentro del iframe, esta página pasa a la ventana principal
+     *    y la conversión se cuenta una sola vez.
+     * 2. A los 3 segundos manda a la persona al WhatsApp de Climatización HD.
+     *    Esta redirección NO dispara BL_GA4.Click_Whatsapp (no es un clic), así que no
+     *    se cuenta dos veces la misma consulta.
+     */
+    var HD_WHATSAPP = 'https://wa.me/5491135070888?text=' +
+      encodeURIComponent('Hola! Acabo de pedir presupuesto en la web de Climatización HD.');
+    var HD_SEGUNDOS = 3;
+ 
+    (function () {
+      if (window.top !== window.self) {
+        try { window.top.location.href = location.href; return; } catch (e) {}
+      }
+      try { if (sessionStorage.getItem('hd_form_ok')) return; } catch (e) {}
+      gtag('event', 'BL_GA4_Form_complete', { transport_type: 'beacon' });
+      try { sessionStorage.setItem('hd_form_ok', '1'); } catch (e) {}
+    })();
+  </script>
+ 
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #f6f7f9; color: #1a1f2b;
+    }
+    .gracias { max-width: 480px; padding: 48px 16px; text-align: center; }
+    .gracias h1 { font-size: 28px; margin: 0 0 12px; }
+    .gracias p { font-size: 17px; line-height: 1.5; margin: 0 0 28px; color: #4a5263; }
+    .cuenta {
+      width: 88px; height: 88px; margin: 0 auto 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; font-weight: 700; color: #fff; background: #25d366;
+    }
+    .boton {
+      display: inline-block; padding: 14px 24px; border-radius: 999px;
+      background: #25d366; color: #fff; font-weight: 600; text-decoration: none;
+    }
+    .volver { display: block; margin-top: 20px; color: #4a5263; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main class="gracias">
+    <h1>¡Gracias! Recibimos tu consulta</h1>
+    <p>Te llevamos a nuestro WhatsApp para seguir con tu presupuesto en <span id="seg">3</span>…</p>
+    <div class="cuenta" id="cuenta">3</div>
+    <a class="boton" id="ir" href="#">Ir a WhatsApp ahora</a>
+    <a class="volver" href="/">Volver al inicio</a>
+  </main>
+ 
+  <script>
+    (function () {
+      var ir = document.getElementById('ir');
+      var cuenta = document.getElementById('cuenta');
+      var seg = document.getElementById('seg');
+      ir.href = HD_WHATSAPP;
+ 
+      var n = HD_SEGUNDOS;
+      var t = setInterval(function () {
+        n -= 1;
+        if (n > 0) {
+          cuenta.textContent = n;
+          seg.textContent = n;
+        } else {
+          clearInterval(t);
+          location.href = HD_WHATSAPP;
+        }
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>

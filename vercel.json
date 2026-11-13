@@ -12,7 +12,7 @@
       "permanent": true
     },
     {
-      "source": "/:p(contacto|mensaje-enviado)",
+      "source": "/contacto",
       "destination": "/#presupuesto",
       "permanent": true
     },
@@ -42,13 +42,28 @@
       "permanent": true
     },
     {
-      "source": "/productos/:slug*",
+      "source": "/:p(footer-wooden-cottages|sitemap_index.xml|page-sitemap.xml|product-sitemap.xml|portfolio-sitemap.xml)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contacto/:path*",
+      "destination": "/#presupuesto",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/:path*",
+      "destination": "/#sistemas",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/:path*",
       "destination": "/#productos",
       "permanent": true
     },
     {
-      "source": "/:p(footer-wooden-cottages|sitemap_index.xml|page-sitemap.xml|product-sitemap.xml|portfolio-sitemap.xml)",
-      "destination": "/",
+      "source": "/productos/:path*",
+      "destination": "/#productos",
       "permanent": true
     }
   ],
