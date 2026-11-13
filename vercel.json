@@ -47,22 +47,22 @@
       "permanent": true
     },
     {
-      "source": "/contacto/:path*",
+      "source": "/contacto/(.*)",
       "destination": "/#presupuesto",
       "permanent": true
     },
     {
-      "source": "/servicios/:path*",
+      "source": "/servicios/(.*)",
       "destination": "/#sistemas",
       "permanent": true
     },
     {
-      "source": "/product-category/:path*",
+      "source": "/product-category(.*)",
       "destination": "/#productos",
       "permanent": true
     },
     {
-      "source": "/productos/:path*",
+      "source": "/productos/(.*)",
       "destination": "/#productos",
       "permanent": true
     }
